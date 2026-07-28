@@ -3,11 +3,11 @@ import axios from 'axios';
 import Pusher from 'pusher-js';
 
 class Chat extends Component {
-    state = { chats: []}
+    state = { chats: [] }
 
     componentDidMount() {
-        this.pusher = new Pusher(process.env.PUSHER_APP_KEY, {
-            cluster: process.env.PUSHER_APP_CLUSTER,
+        this.pusher = new Pusher(process.env.NEXT_PUSHER_APP_KEY, {
+            cluster: process.env.NEXT_PUSHER_APP_CLUSTER,
             useTLS: true
         });
 
@@ -30,14 +30,11 @@ class Chat extends Component {
     componentWillUnmount() {
         this.pusher.disconnect()
     }
-}
 
-export default Chat;
-
-handleKeyUp = evt => {
+    handleKeyUp = evt => {
       const value = evt.target.value;
       
-      if (evt.key == 'Enter' && !evt.shiftKey) {
+      if (evt.key === 'Enter' && !evt.shiftKey) {
         const { activeUser: user } = this.props;
         const chat = { user, message: value, timestamp: +new Date };
         
@@ -60,3 +57,6 @@ handleKeyUp = evt => {
       </Fragment> )
     }
 
+}
+
+export default Chat;
